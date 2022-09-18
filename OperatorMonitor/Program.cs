@@ -6,6 +6,7 @@ using OperatorMonitor.Business.Managers.Abstract;
 using OperatorMonitor.Business.Parameters;
 using OperatorMonitor.Business.Parameters.INI;
 using OperatorMonitor.Business.Providers;
+using OperatorMonitor.Business.Providers.MockProviders;
 using OperatorMonitor.Data.Abstract;
 using OperatorMonitor.Data.Concrete.EFCore;
 using OperatorMonitor.Views;
@@ -26,6 +27,8 @@ namespace OperatorMonitor
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            Control.CheckForIllegalCrossThreadCalls = false;
 
             IHost host = CreateHostBuilder().Build();
             ServiceProvider = host.Services;
@@ -49,7 +52,7 @@ namespace OperatorMonitor
                     services.AddScoped<IOperationLogDal, EfOperationLogDal>();
                     services.AddScoped<IAccessLogManager, AccesLogManager>();
                     services.AddScoped<IMailSettingParametersFile, MailSettingFileINI>();
-                    services.AddScoped<IAccessLogService, AccessLogService>();
+                    services.AddScoped<IAccessLogService, MockAccessLogService>();
                     services.AddScoped<IFailedVerifyService, FailedVerifyManager>();
                     services.AddTransient<OperatorMonitorForm>();
                     services.AddTransient<FailedVerifyForm>();
